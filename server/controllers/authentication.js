@@ -1,4 +1,7 @@
-const User = require('../models/user');
+const jwt = require('jwt-simple');
+
+const User   = require('../models/user');
+const config = require('../config');
 
 exports.signup = (request, response, next) => {
   const { username, email, password } = request.body;
@@ -17,10 +20,12 @@ exports.signup = (request, response, next) => {
     // Else, create and save new user record
     const newUser = new User({ username, email, password });
     newUser.save().then(user => {
-      response.json(user);
+      response.json({
+        token: tokenForUser(user)
+      });
     }).catch(error => {
       next(error);
-    }) // newUser.save()
+    }); // newUser.save()
   }).catch(error => {
     return next(error);
   }); // User.findOne()
@@ -43,4 +48,9 @@ const validate = (response, username, email, password) => {
 const validateEmail = email => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+}
+
+const tokenForUser = user => {
+  const timestamp = new Date().getTime();
+  return jwt.encode({ sub: user.id, iat: timestamp }, config.SECRET);
 }
