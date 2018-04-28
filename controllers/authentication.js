@@ -20,7 +20,7 @@ exports.signup = (request, response, next) => {
     // Else, create and save new user record
     const newUser = new User({ username, email, password });
     newUser.save().then(user => {
-      response.json({
+      response.status(200).send({
         token: tokenForUser(user)
       });
     }).catch(error => {
@@ -29,6 +29,12 @@ exports.signup = (request, response, next) => {
   }).catch(error => {
     return next(error);
   }); // User.findOne()
+}
+
+exports.signin = (request, response, next) => {
+  response.status(200).send({
+    token: tokenForUser(request.user)
+  });
 }
 
 const validate = (response, username, email, password) => {

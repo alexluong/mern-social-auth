@@ -2,6 +2,7 @@ const express    = require('express');
 const bodyParser = require('body-parser');
 const morgan     = require('morgan');
 const mongoose   = require('mongoose');
+const passport   = require('passport');
 
 const router = require('./router');
 const config = require('./config');
