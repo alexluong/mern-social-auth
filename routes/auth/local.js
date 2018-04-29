@@ -7,10 +7,10 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 const router = express.Router();
 
-/* POST /local/signin */
+/* POST /auth/signin */
 router.post('/signin', requireSignin, localController.signin);
 
-/* POST /local/signup */
+/* POST /auth/signup */
 router.post('/signup', localController.signup);
 
 module.exports = router;

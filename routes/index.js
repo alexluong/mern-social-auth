@@ -6,7 +6,7 @@ const router = app => {
     response.status(200).send({ });
   });
   app.use('/protected', protectedRoute);
-  app.use('/local', localRoute);
+  app.use('/auth', localRoute);
 };
 
 module.exports = router;
