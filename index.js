@@ -4,7 +4,7 @@ const morgan     = require('morgan');
 const mongoose   = require('mongoose');
 const passport   = require('passport');
 
-const router = require('./router');
+const router = require('./routes');
 const config = require('./config');
 
 // DB Setup

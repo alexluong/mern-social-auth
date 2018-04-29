@@ -3,14 +3,15 @@ const LocalStrategy = require('passport-local');
 const JwtStrategy   = require('passport-jwt').Strategy;
 const ExtractJwt    = require('passport-jwt').ExtractJwt;
 
-const User   = require('../models/user');
-const config = require('../config');
+const userService = require('./user');
+const config      = require('../config');
 
 // Create Local Strategy
 const localOptions = {}
 
 const onLocalStrategy = (username, password, done) => {
-  User.findOne().or([{ username }, { email: username }]).then(user => {
+  userService.findByUsername(username)
+  .then(user => {
     if (!user) {
       done(null, false);
     }
@@ -25,7 +26,7 @@ const onLocalStrategy = (username, password, done) => {
     }); // user.comparePassword
   }).catch(error => {
      done(error);
-  }); // User.findOne
+  }); // userService.findByUsername
 };
 
 const localLogin = new LocalStrategy(localOptions, onLocalStrategy);
@@ -38,7 +39,7 @@ const jwtOptions = {
 };
 
 const onJwtStrategy = (payload, done) => {
-  User.findById(payload.sub).then(user => {
+  userService.findById(payload.sub).then(user => {
     if (!user) {
       done(null, false);
     }
