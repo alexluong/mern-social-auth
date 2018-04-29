@@ -6,7 +6,7 @@ if (result.error) {
 }
 
 const config  = {};
-config.PORT   = 8000;
+config.PORT   = process.env.PORT || 8000;
 config.DB_URI = process.env.DB_URI;
 config.SECRET = process.env.SECRET;
 
