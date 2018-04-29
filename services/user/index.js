@@ -1,8 +1,8 @@
 const User = require('../../models/user');
 
-const service = {};
+const userService = {};
 
-service.findByUsername = (username, email) => {
+userService.findByUsername = (username, email) => {
   if (email) {
     return User.findOne().or([{ username }, { email }]);
   } else {
@@ -10,8 +10,8 @@ service.findByUsername = (username, email) => {
   }
 }
 
-service.findById = id => {
+userService.findById = id => {
   return User.findById(id);
 }
 
-module.exports = service;
+module.exports = userService;
