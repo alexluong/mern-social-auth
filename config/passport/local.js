@@ -1,5 +1,5 @@
 const passport       = require('passport');
-const LocalStrategy  = require('passport-local');
+const LocalStrategy  = require('passport-local').Strategy;
 const JwtStrategy    = require('passport-jwt').Strategy;
 const ExtractJwt     = require('passport-jwt').ExtractJwt;
 
@@ -27,7 +27,7 @@ const localCallback = (username, password, done) => {
   }).catch(error => {
      done(error);
   }); // userService.findByUsername
-};
+}; // localCallback
 
 const localLogin = new LocalStrategy(localOptions, localCallback);
 

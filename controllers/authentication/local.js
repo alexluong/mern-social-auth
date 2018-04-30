@@ -1,5 +1,6 @@
 const jwt = require('jwt-simple');
 
+const User        = require('../../models/user');
 const userService = require('../../services/user');
 
 const localController = {};
@@ -30,13 +31,13 @@ localController.signup = (request, response, next) => {
   }).catch(error => {
     return next(error);
   }); // User.findOne()
-}
+}; // localController.signup
 
 localController.signin = (request, response, next) => {
   response.status(200).send({
     token: tokenForUser(request.user)
   });
-}
+};
 
 const validate = (response, username, email, password) => {
   if (!email || !username || !password) {
@@ -50,17 +51,17 @@ const validate = (response, username, email, password) => {
       error: 'You must provide a valid email address'
     });
   }
-}
+};
 
 const validateEmail = email => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
-}
+};
 
 const tokenForUser = user => {
   const config = require('../../config');
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, config.SECRET);
-}
+};
 
 module.exports = localController;

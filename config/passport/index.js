@@ -1,2 +1,2 @@
-require('./google');
 require('./local');
+require('./google');
