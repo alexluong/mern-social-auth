@@ -7,24 +7,29 @@ const userSchema = new Schema({
   email   : { type: String, unique: true, lowercase: true },
   password: String,
 
-  // google   : String,
-  // facebook : String,
-  // twitter  : String,
-  // github   : String,
-  // instagram: String,
-  // linkedin : String,
-  // steam    : String,
-  // tokens   : Array,
+  google   : String,
+  facebook : String,
+  twitter  : String,
+  github   : String,
+  instagram: String,
+  linkedin : String,
+  steam    : String,
+  tokens   : Array,
 
-  // profile: {
-  //   name    : String,
-  //   gender  : String,
-  //   age     : Number,
-  //   birthday: String,
-  //   location: String,
-  //   website : String,
-  //   photo   : String
-  // }
+  profile: {
+    name: {
+      familyName: String,
+      givenName : String
+    },
+    displayName: String,
+    email      : String,
+    gender     : String,
+    age        : Number,
+    birthday   : String,
+    location   : String,
+    website    : String,
+    photo      : String
+  }
 });
 
 /**
@@ -33,9 +38,14 @@ const userSchema = new Schema({
 userSchema.pre('save', function(next) {
   const user = this; // get context
 
+  // Check if 'password' is provided
+  if (!user.isModified('password')) {
+    next();
+  }
+
   bcrypt.genSalt(10, (error, salt) => {
     if (error) {
-      return next(error);
+      next(error);
     }
 
     bcrypt.hash(user.password, salt, null, (error, hash) => {
@@ -60,5 +70,4 @@ userSchema.methods.comparePassword = function(candidatePassword) {
   }); // new Promise
 }; // userSchema.methos.comparePassword
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+mongoose.model('Users', userSchema);

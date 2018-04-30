@@ -1,17 +1,19 @@
 const express    = require('express');
 const bodyParser = require('body-parser');
 const morgan     = require('morgan');
-
-const routes = require('./routes');
-const config = require('./config');
+const passport   = require('passport');
 
 // DB Setup
 require('./config/db');
 
 // App Setup
+const routes = require('./routes');
+const config = require('./config');
+
 const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }));
+app.use(passport.initialize());
 app.use('/', routes); // routing
 
 // Server Setup

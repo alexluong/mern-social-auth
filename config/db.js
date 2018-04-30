@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const config = require('./');
 
+require('../models/User');
+
 // DB Setup
 mongoose.connect(config.DB_URI)
 .then(response => {

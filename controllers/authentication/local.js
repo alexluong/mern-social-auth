@@ -1,6 +1,6 @@
-const jwt = require('jwt-simple');
+const mongoose = require('mongoose');
 
-const User        = require('../../models/user');
+const User        = mongoose.model('Users');
 const userService = require('../../services/user');
 
 const localController = {};
@@ -23,7 +23,7 @@ localController.signup = (request, response, next) => {
     const newUser = new User({ username, email, password });
     newUser.save().then(user => {
       response.status(200).send({
-        token: tokenForUser(user)
+        token: userService.generateToken(request.user)
       });
     }).catch(error => {
       next(error);
@@ -35,7 +35,7 @@ localController.signup = (request, response, next) => {
 
 localController.signin = (request, response, next) => {
   response.status(200).send({
-    token: tokenForUser(request.user)
+    token: userService.generateToken(request.user)
   });
 };
 
@@ -56,12 +56,6 @@ const validate = (response, username, email, password) => {
 const validateEmail = email => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
-};
-
-const tokenForUser = user => {
-  const config = require('../../config');
-  const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, config.SECRET);
 };
 
 module.exports = localController;
