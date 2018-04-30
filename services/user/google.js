@@ -18,7 +18,6 @@ googleService.createNewUser = profile => {
       newUser.google  = id;
       newUser.profile = { displayName, name, gender, photo, email };
 
-      console.log(newUser);
       newUser.save(error => {
         if (error) {
           reject(error);

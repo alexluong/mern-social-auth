@@ -3,18 +3,37 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: { type: String, unique: true, lowercase: true },
-  email   : { type: String, unique: true, lowercase: true },
+  username: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    index: {
+      unique: false,
+      partialFilterExpression: {username: {$type: 'string'}}
+    }
+  },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    index: {
+      unique: true,
+      partialFilterExpression: {email: {$type: 'string'}}
+    }
+  },
   password: String,
 
-  google   : String,
-  facebook : String,
-  twitter  : String,
-  github   : String,
-  instagram: String,
-  linkedin : String,
-  steam    : String,
-  tokens   : Array,
+  google    : String,
+  facebook  : String,
+  twitter   : String,
+  github    : String,
+  instagram : String,
+  linkedin  : String,
+  steam     : String,
+  reddit    : String,
+  spotify   : String,
+  hackernews: String,
+  tokens    : Array,
 
   profile: {
     name: {
