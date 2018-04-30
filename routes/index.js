@@ -1,12 +1,12 @@
-const localRoute     = require('./auth/local');
-const protectedRoute = require('./protected');
+const authRouter      = require('./auth');
+const protectedRouter = require('./protected');
 
-const router = app => {
-  app.get('/ping', (request, response) => {
-    response.status(200).send({ });
-  });
-  app.use('/protected', protectedRoute);
-  app.use('/auth', localRoute);
-};
+const router = require('express').Router();
+
+router.get('/ping', (request, response) => {
+  response.status(200).send({ });
+});
+router.use('/protected', protectedRouter);
+router.use('/auth', authRouter);
 
 module.exports = router;

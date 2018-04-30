@@ -12,4 +12,9 @@ config.PORT   = process.env.PORT || 8000;
 config.DB_URI = process.env.DB_URI;
 config.SECRET = process.env.SECRET;
 
+config.GOOGLE = {
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET
+}
+
 module.exports = config;

@@ -4,7 +4,7 @@ const morgan     = require('morgan');
 const mongoose   = require('mongoose');
 const passport   = require('passport');
 
-const router = require('./routes');
+const routes = require('./routes');
 const config = require('./config');
 
 // DB Setup
@@ -20,7 +20,7 @@ mongoose.connect(config.DB_URI)
 const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }));
-router(app);
+app.use('/', routes); // routing
 
 // Server Setup
 const port = config.PORT;

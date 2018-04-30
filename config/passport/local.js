@@ -1,15 +1,15 @@
-const passport      = require('passport');
-const LocalStrategy = require('passport-local');
-const JwtStrategy   = require('passport-jwt').Strategy;
-const ExtractJwt    = require('passport-jwt').ExtractJwt;
+const passport       = require('passport');
+const LocalStrategy  = require('passport-local');
+const JwtStrategy    = require('passport-jwt').Strategy;
+const ExtractJwt     = require('passport-jwt').ExtractJwt;
 
-const userService = require('./user');
-const config      = require('../config');
+const userService = require('../../services/user');
+const config      = require('../');
 
 // Create Local Strategy
 const localOptions = {}
 
-const onLocalStrategy = (username, password, done) => {
+const localCallback = (username, password, done) => {
   userService.findByUsername(username)
   .then(user => {
     if (!user) {
@@ -29,7 +29,7 @@ const onLocalStrategy = (username, password, done) => {
   }); // userService.findByUsername
 };
 
-const localLogin = new LocalStrategy(localOptions, onLocalStrategy);
+const localLogin = new LocalStrategy(localOptions, localCallback);
 
 // Create JWT Strategy
 const jwtOptions = {
@@ -38,7 +38,7 @@ const jwtOptions = {
   session: false
 };
 
-const onJwtStrategy = (payload, done) => {
+const jwtCallback = (payload, done) => {
   userService.findById(payload.sub).then(user => {
     if (!user) {
       done(null, false);
@@ -50,7 +50,7 @@ const onJwtStrategy = (payload, done) => {
   });
 };
 
-const jwtLogin = new JwtStrategy(jwtOptions, onJwtStrategy);
+const jwtLogin = new JwtStrategy(jwtOptions, jwtCallback);
 
-passport.use(jwtLogin);
 passport.use(localLogin);
+passport.use(jwtLogin);
