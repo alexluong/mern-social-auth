@@ -1,8 +1,8 @@
 const jwt      = require('jwt-simple');
 const mongoose = require('mongoose');
-
 const User = mongoose.model('Users');
 
+const googleService = require('./google');
 const userService = {};
 
 userService.findByUsername = (username, email) => {
@@ -22,5 +22,7 @@ userService.generateToken = id => {
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: id, iat: timestamp }, SECRET);
 };
+
+userService.google = googleService;
 
 module.exports = userService;

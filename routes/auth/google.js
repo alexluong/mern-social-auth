@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-const localController = require('../../controllers/authentication/local');
+const authController  = require('../../controllers/authentication');
 const passportService = require('../../config/passport');
 const googleFirstTime = passport.authenticate('google', {
   session: false,
@@ -14,8 +14,6 @@ const router = require('express').Router();
 router.get('/start', googleFirstTime);
 
 /* GET /auth/google/callback */
-router.get('/redirect', googleCallback, (request, response, next) => {
-  response.send({ hello: 'there' });
-});
+router.get('/redirect', googleCallback, authController.google.redirect);
 
 module.exports = router;

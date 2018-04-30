@@ -23,7 +23,7 @@ localController.signup = (request, response, next) => {
     const newUser = new User({ username, email, password });
     newUser.save().then(user => {
       response.status(200).send({
-        token: userService.generateToken(request.user)
+        token: userService.generateToken(user.id)
       });
     }).catch(error => {
       next(error);
@@ -35,7 +35,7 @@ localController.signup = (request, response, next) => {
 
 localController.signin = (request, response, next) => {
   response.status(200).send({
-    token: userService.generateToken(request.user)
+    token: userService.generateToken(request.user.id)
   });
 };
 

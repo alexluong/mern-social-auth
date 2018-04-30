@@ -5,6 +5,7 @@ const config = require('./');
 require('../models/User');
 
 // DB Setup
+mongoose.Promise = global.Promise;
 mongoose.connect(config.DB_URI)
 .then(response => {
   console.log('Database connected');
