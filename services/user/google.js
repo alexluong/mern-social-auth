@@ -3,7 +3,7 @@ const User = mongoose.model('Users');
 
 const googleService = {};
 
-googleService.findById = id => {
+googleService.findByGoogleId = id => {
   return User.findOne({ google: id });
 }
 

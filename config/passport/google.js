@@ -12,7 +12,7 @@ const googleOptions = {
 };
 
 const googleCallback = (accessToken, refreshToken, profile, done) => {
-  userService.google.findById(profile.id)
+  userService.google.findByGoogleId(profile.id)
   .then(user => {
     if (user) {
       done(null, user);
