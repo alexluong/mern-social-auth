@@ -11,25 +11,20 @@ const googleOptions = {
   callbackURL: '/auth/google/redirect'
 };
 
-const googleCallback = (accessToken, refreshToken, profile, done) => {
-  userService.google.findByGoogleId(profile.id)
-  .then(user => {
-    if (user) {
-      done(null, user);
-    }
+const googleCallback = async (accessToken, refreshToken, profile, done) => {
+  try {
+    const user = await userService.google.findByGoogleId(profile.id);
     
-    userService.google.createNewUser(profile)
-    .then(newUser => {
-      done(null, newUser);
-    }) // then
-    .catch(error => {
-      done(error);
-    }); // userService.createBySocial
-  }) // then
-  .catch(error => {
-    done(error);
-  }); // userService.findBySocialID
-}; // googleCallback
+    if (user) {
+      return done(null, user);
+    }
+      
+    const newUser = await userService.google.createNewUser(profile);
+    return done(null, newUser);
+  } catch (error) {
+    return done(error);
+  }
+};
 
 const googleLogin = new GoogleStrategy(googleOptions, googleCallback);
 passport.use(googleLogin);

@@ -8,7 +8,7 @@ googleService.findByGoogleId = id => {
 }
 
 googleService.createNewUser = profile => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const { id, emails, displayName, name, gender, photos} = profile;
       const photo = photos[0].value;
@@ -18,12 +18,8 @@ googleService.createNewUser = profile => {
       newUser.google  = id;
       newUser.profile = { displayName, name, gender, photo, email };
 
-      newUser.save(error => {
-        if (error) {
-          reject(error);
-        }
-        resolve(newUser);
-      });
+      const savedUser = await newUser.save();
+      resolve(savedUser);
     } catch (error) {
       reject(error);
     }

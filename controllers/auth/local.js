@@ -5,13 +5,13 @@ const userService = require('../../services/user');
 
 const localController = {};
 
-localController.signup = (request, response, next) => {
+localController.signup = async (request, response, next) => {
   const { username, email, password } = request.body;
   validate(response, username, email, password);
 
-  // See if a user with the given username or email exists
-  userService.findByUsername(username, email)
-  .then(user => {
+  try {
+    // See if a user with the given username or email exists
+    const user = await userService.findByUsername(username, email)
     // If already exists, return an error
     if (user) {
       return response.status(422).send({
@@ -21,17 +21,14 @@ localController.signup = (request, response, next) => {
 
     // Else, create and save new user record
     const newUser = new User({ username, email, password });
-    newUser.save().then(user => {
-      response.status(200).send({
-        token: userService.generateToken(user.id)
-      });
-    }).catch(error => {
-      next(error);
-    }); // newUser.save()
-  }).catch(error => {
+    const savedUser = await newUser.save();
+    response.status(200).send({
+      token: userService.generateToken(savedUser.id)
+    });
+  } catch (error) {
     return next(error);
-  }); // User.findOne()
-}; // localController.signup
+  }
+};
 
 localController.signin = (request, response, next) => {
   response.status(200).send({

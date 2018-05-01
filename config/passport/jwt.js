@@ -12,16 +12,18 @@ const jwtOptions = {
   session: false
 };
 
-const jwtCallback = (payload, done) => {
-  userService.findById(payload.sub).then(user => {
+const jwtCallback = async (payload, done) => {
+  try {
+    const user = await userService.findById(payload.sub);
+
     if (!user) {
-      done(null, false);
+      return done(null, false);
     }
 
-    done(null, user);
-  }).catch(error => {
+    return done(null, user);
+  } catch (error) {
     return done(error, false);
-  });
+  }
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, jwtCallback);
