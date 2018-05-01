@@ -8,7 +8,7 @@ const localOptions = {}
 
 const localCallback = async (username, password, done) => {
   try {
-    const user = userService.findByUsername(username)
+    const user = await userService.findByUsername(username)
     
     if (!user) {
       return done(null, false);

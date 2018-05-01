@@ -10,16 +10,14 @@ localController.signup = async (request, response, next) => {
   validate(response, username, email, password);
 
   try {
-    // See if a user with the given username or email exists
     const user = await userService.findByUsername(username, email)
-    // If already exists, return an error
+    
     if (user) {
       return response.status(422).send({
         error: 'An account with this username or email address already exists'
       });
     }
 
-    // Else, create and save new user record
     const newUser = new User({ username, email, password });
     const savedUser = await newUser.save();
     response.status(200).send({

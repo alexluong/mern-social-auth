@@ -2,6 +2,7 @@ const express    = require('express');
 const bodyParser = require('body-parser');
 const morgan     = require('morgan');
 const passport   = require('passport');
+const cors       = require('cors');
 
 // DB Setup
 require('./config/db');
@@ -12,6 +13,7 @@ const config = require('./config');
 
 const app = express();
 app.use(morgan('combined'));
+app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
 app.use(passport.initialize());
 app.use('/', routes); // routing

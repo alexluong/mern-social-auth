@@ -1,9 +1,10 @@
-const userService = require('../../services/user');
+const userService        = require('../../services/user');
+const CLIENT_SUCCESS_URI = require('../../config').CLIENT_SUCCESS_URI;
 
 const googleController = {};
 
 googleController.redirect = (request, response, next) => {
-  response.redirect(`http://localhost:3000#${userService.generateToken(request.user.id)}`);
+  response.redirect(`${CLIENT_SUCCESS_URI}#${userService.generateToken(request.user.id)}`);
   // response.status(200).send({
   //   token: userService.generateToken(request.user.id)
   // });
