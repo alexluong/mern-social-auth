@@ -13,9 +13,7 @@ localController.signup = async (request, response, next) => {
     const user = await userService.findByUsername(username, email)
     
     if (user) {
-      return response.status(422).send({
-        error: 'An account with this username or email address already exists'
-      });
+      return response.status(422).send('An account with this username or email address already exists');
     }
 
     const newUser = new User({ username, email, password });

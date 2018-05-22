@@ -15,7 +15,6 @@ const localCallback = async (username, password, done) => {
     }
     
     const isMatch = await user.comparePassword(password);
-    console.log(isMatch);
 
     if (!isMatch) {
       return done(null, false);
