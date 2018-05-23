@@ -1,20 +1,24 @@
 const localService = {};
 
-localService.validate = (response, username, email, password) => {
+localService.validate = (username, email, password) => {
   if (!email || !username || !password) {
-    return response.status(422).send({
+    return {
+      success: false,
       error: 'You must provide username, email, and password'
-    });
+    };
   }
 
-  if (!validateEmail(email)) {
-    return response.status(422).send({
+  if (!isEmail(email)) {
+    return {
+      success: false,
       error: 'You must provide a valid email address'
-    });
+    };
   }
+
+  return { success: true };
 };
 
-const validateEmail = email => {
+const isEmail = email => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 };

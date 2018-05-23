@@ -10,6 +10,7 @@
   "author": "Alex Luong",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
@@ -19,6 +20,7 @@
     "mongoose": "^5.0.16",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"

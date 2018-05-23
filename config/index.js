@@ -18,4 +18,9 @@ config.GOOGLE = {
   clientSecret: process.env.GOOGLE_CLIENT_SECRET
 }
 
+config.FACEBOOK = {
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_APP_SECRET
+}
+
 module.exports = config;

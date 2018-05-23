@@ -1,8 +1,10 @@
 const jwt      = require('jwt-simple');
 const mongoose = require('mongoose');
-const User = mongoose.model('Users');
+const User     = mongoose.model('Users');
 
-const googleService = require('./google');
+const googleService   = require('./google');
+const facebookService = require('./facebook');
+
 const userService = {};
 
 userService.findByUsername = (username, email) => {
@@ -23,6 +25,7 @@ userService.generateToken = id => {
   return jwt.encode({ sub: id, iat: timestamp }, SECRET);
 };
 
-userService.google = googleService;
+userService.google   = googleService;
+userService.facebook = facebookService;
 
 module.exports = userService;

@@ -1,6 +1,5 @@
 const errorHandlers = {};
 
-
 /**
  *  Catch Errors Handler
  *  HOC for controllers

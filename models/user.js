@@ -37,8 +37,8 @@ const userSchema = new Schema({
 
   profile: {
     name: {
-      familyName: String,
-      givenName : String
+      firstName: String,
+      lastName : String
     },
     displayName: String,
     email      : String,
@@ -47,7 +47,7 @@ const userSchema = new Schema({
     birthday   : String,
     location   : String,
     website    : String,
-    photo      : String
+    photoURL   : String
   }
 });
 

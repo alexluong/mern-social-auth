@@ -7,14 +7,16 @@ const catchErrors = require('../../services/errorHandlers').catchErrors;
 
 const signup = async (request, response, next) => {
   const { username, email, password } = request.body;
-  validate(response, username, email, password);
+
+  const validation = validate(response, username, email, password);
+  if (validation.success) {
+    return response.status(422).send(validation.error);
+  }
 
   const user = await userService.findByUsername(username, email)
   
   if (user) {
-    return response.status(422).send({
-      error: 'An account with this username or email address already exists'
-    });
+    return response.status(422).send('An account with this username or email address already exists');
   }
 
   const newUser = new User({ username, email, password });

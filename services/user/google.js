@@ -11,12 +11,21 @@ googleService.createNewUser = profile => {
   return new Promise(async (resolve, reject) => {
     try {
       const { id, emails, displayName, name, gender, photos} = profile;
-      const photo = photos[0].value;
-      const email = emails[0].value;
+      const photoURL = photos[0].value;
+      const email    = emails[0].value;
 
       const newUser   = new User();
       newUser.google  = id;
-      newUser.profile = { displayName, name, gender, photo, email };
+      newUser.profile = {
+        displayName,
+        name: {
+          firstName: name.givenName,
+          lastName : name.familyName
+        },
+        gender,
+        photoURL,
+        email
+      };
 
       const savedUser = await newUser.save();
       resolve(savedUser);
