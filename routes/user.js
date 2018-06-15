@@ -1,8 +1,7 @@
-const express  = require('express');
+const express = require('express');
 const passport = require('passport');
 
-const userController  = require('../controllers/user');
-const passportService = require('../config/passport');
+const userController = require('../controllers/user');
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 const router = express.Router();

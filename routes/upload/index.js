@@ -1,13 +1,10 @@
 const express = require('express');
-const passport = require('passport');
-const path = require('path');
-
+const requireAuthentication = require('../../middlewares/requireAuthentication');
 const uploadController = require('../../controllers/upload');
-const requireAuth = passport.authenticate('jwt', { session: false });
 
 const router = express.Router();
 
-/* POST /upload */
-router.post('/', requireAuth, uploadController.uploadFile);
+/* GET /upload */
+router.get('/', requireAuthentication, uploadController.uploadFile);
 
 module.exports = router;
