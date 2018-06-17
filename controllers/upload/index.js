@@ -22,8 +22,6 @@ uploadController.uploadFile = (request, response) => {
     },
     (error, url) => response.send({ key, url }),
   );
-
-  // response.status(200).send({ fileURL: 'hello' });
 };
 
 module.exports = uploadController;
