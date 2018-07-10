@@ -1,21 +1,20 @@
-const passport       = require('passport');
-const LocalStrategy  = require('passport-local').Strategy;
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 const userService = require('../../services/user');
 
 // Create Local Strategy
-const localOptions = {}
+const localOptions = {};
 
 const localCallback = async (username, password, done) => {
   try {
-    const user = await userService.findByUsername(username)
-    
+    const user = await userService.findByUsername(username);
+
     if (!user) {
       return done(null, false);
     }
-    
-    const isMatch = await user.comparePassword(password);
 
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return done(null, false);
     }

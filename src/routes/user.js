@@ -9,4 +9,7 @@ const router = express.Router();
 /* GET /user/current */
 router.get('/current', requireAuth, userController.getCurrentUser);
 
+/* PUT /user/avatar */
+router.put('/avatar', requireAuth, userController.updateAvatar);
+
 module.exports = router;
